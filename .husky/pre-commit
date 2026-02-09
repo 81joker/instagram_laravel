@@ -9,7 +9,7 @@ echo "Running Laravel Pint..."
 vendor/bin/pint
 
 echo "Running Laravel Pint Test..."
-vendor/bin/pint --test
+php vendor/bin/pint --test
 
 echo "Running PHPStan..."
-vendor/bin/phpstan analyse --memory-limit=1G
+php vendor/bin/phpstan analyse --memory-limit=1G
