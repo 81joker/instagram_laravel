@@ -1,4 +1,4 @@
-npm test
+# npm test
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
@@ -8,5 +8,8 @@ npm test
 echo "Running Laravel Pint..."
 vendor/bin/pint
 
+echo "Running Laravel Pint Test..."
+vendor/bin/pint --test
+
 echo "Running PHPStan..."
-vendor/bin/phpstan analyse
+vendor/bin/phpstan analyse --memory-limit=1G
