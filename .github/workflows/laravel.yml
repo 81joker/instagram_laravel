@@ -34,8 +34,8 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: php artisan test
 
-      # - name: Run Static Analysis
-      #   run: vendor/bin/phpstan analyse -c phpstan.neon
+      - name: Run Static Analysis
+        run: vendor/bin/phpstan analyse -c phpstan.neon
 
       # - name: Run Style Check
       #   run: vendor/bin/phpcs --standard=PSR12 app/
@@ -49,8 +49,8 @@ jobs:
       # - name: Run Deprecation Checker
       # #   run: vendor/bin/deprecation-detector detect:run src/
 
-      # - name: Run Laravel Pint
-      #   run: vendor/bin/pint --test
+      - name: Run Laravel Pint
+        run: vendor/bin/pint --test
 
       # - name: Upload Code Coverage
       #   uses: codecov/codecov-action@v3
