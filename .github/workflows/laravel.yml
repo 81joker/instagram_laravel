@@ -6,6 +6,7 @@ env:
   DB_CONNECTION: sqlite
   DB_DATABASE: database/database.sqlite
   PROJECT_NAME: "Laravel Instagram Ordering"
+  ENVIRONMENT: "${{env.ENVIRONMENT}}"
 
 on:
   push:
@@ -115,7 +116,7 @@ jobs:
             "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "production"
+            "${{env.ENVIRONMENT}}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -128,6 +129,6 @@ jobs:
             "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "production"
+            "${{env.ENVIRONMENT}}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
