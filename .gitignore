@@ -13,7 +13,6 @@
 /.zed
 /auth.json
 /node_modules
-/public/build
 /public/hot
 /public/storage
 /storage/*.key
@@ -23,3 +22,16 @@ Homestead.json
 Homestead.yaml
 Thumbs.db
 
+# Ignore IDE and editor specific files
+# *.sublime-project
+# *.sublime-workspace
+# *.code-workspace
+# *.vscode
+# *.idea
+# *.phpstorm.meta.php
+
+# Ignore .husky files
+.husky/_/husky.sh
+.husky/pre-commit
+# .husky/pre-push
+# .husky/commit-msg
