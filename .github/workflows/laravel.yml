@@ -148,7 +148,7 @@ jobs:
         run: |
           curl -X POST -H 'Content-type: application/json' \
           --data "{
-            \"text\": \"❌ Deployment Failed\nProject: Laravel Food Ordering\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+            \"text\": \"❌ Deployment Failed\nProject: Laravel Instgram Ordering\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
           }" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -157,5 +157,5 @@ jobs:
         if: success()
         run: |
           curl -X POST -H 'Content-type: application/json' \
-          --data "{\"text\":\"✅ Deployment Successful for Laravel Food Ordering\nBranch: ${{ github.ref_name }}\nEnvironment: Production\"}" \
+          --data "{\"text\":\"✅ Deployment Successful for Laravel Instgram Ordering\nBranch: ${{ github.ref_name }}\nEnvironment: Production\"}" \
           ${{ secrets.SLACK_WEBHOOK_URL }}
