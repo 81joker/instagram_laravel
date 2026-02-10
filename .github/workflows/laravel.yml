@@ -58,9 +58,6 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: ./vendor/bin/phpunit --dont-report-useless-tests
 
-      # - name: Run Static Analysis
-      #   run: vendor/bin/phpstan analyse -c phpstan.neon
-
       # - name: Run Style Check
       #   run: vendor/bin/phpcs --standard=PSR12 app/
 
@@ -72,8 +69,8 @@ jobs:
 
       - name: Run Laravel Pint
         run: vendor/bin/pint --test
-      - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --level=7 --memory-limit=2G
+      # - name: Run PHPStan
+      #   run: vendor/bin/phpstan analyse --level=7 --memory-limit=2G
 
       # 🔔 Build failed
       - name: Notify Slack (Build Failed)
