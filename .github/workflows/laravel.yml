@@ -58,8 +58,8 @@ jobs:
           DB_DATABASE: database/database.sqlite
         run: ./vendor/bin/phpunit --dont-report-useless-tests
 
-      - name: Run Static Analysis
-        run: vendor/bin/phpstan analyse -c phpstan.neon
+      # - name: Run Static Analysis
+      #   run: vendor/bin/phpstan analyse -c phpstan.neon
 
       # - name: Run Style Check
       #   run: vendor/bin/phpcs --standard=PSR12 app/

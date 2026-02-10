@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Item extends Component
 {
-    public function render()
+    public function render(): \Illuminate\View\View
     {
         return view('livewire.post.item');
     }
