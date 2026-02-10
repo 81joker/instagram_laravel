@@ -1,5 +1,12 @@
 name: Laravel Instagram Ordering CI/CD
 
+env:
+  APP_ENV: testing
+  APP_DEBUG: true
+  DB_CONNECTION: sqlite
+  DB_DATABASE: database/database.sqlite
+  PROJECT_NAME: "Laravel Instagram Ordering"
+
 on:
   push:
     branches: ["*"]
@@ -64,7 +71,7 @@ jobs:
         run: |
           bash .github/scripts/slack-notify.sh \
             build failed \
-            "Laravel Food Ordering" \
+            "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         env:
@@ -76,7 +83,7 @@ jobs:
         run: |
           bash .github/scripts/slack-notify.sh \
             build success \
-            "Laravel Food Ordering" \
+            "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         env:
@@ -105,7 +112,7 @@ jobs:
         run: |
           bash .github/scripts/slack-notify.sh \
             deploy failed \
-            "Laravel Instagram Ordering" \
+            "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             "production"
@@ -118,7 +125,7 @@ jobs:
         run: |
           bash .github/scripts/slack-notify.sh \
             deploy success \
-            "Laravel Instagram Ordering" \
+            "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
             "production"
