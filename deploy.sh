@@ -38,3 +38,13 @@ echo "Deployed commit:"
 git --no-pager log -1 --pretty=oneline
 
 echo "The app has been built and deployed!"
+
+
+echo "[4/6] Installing composer dependencies (remote)"
+composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
+
+echo "[4.5/6] Installing Node dependencies"
+npm ci
+
+echo "[4.6/6] Building frontend assets"
+npm run build
