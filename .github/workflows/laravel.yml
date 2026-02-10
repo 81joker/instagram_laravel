@@ -56,7 +56,7 @@ jobs:
         env:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
-        run: php artisan test
+        run: ./vendor/bin/phpunit --dont-report-useless-tests
 
       - name: Run Static Analysis
         run: vendor/bin/phpstan analyse -c phpstan.neon
