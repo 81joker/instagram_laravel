@@ -30,8 +30,3 @@ Thumbs.db
 # *.idea
 # *.phpstorm.meta.php
 
-# Ignore .husky files
-.husky/_/husky.sh
-.husky/pre-commit
-# .husky/pre-push
-# .husky/commit-msg

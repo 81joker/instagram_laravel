@@ -19,5 +19,5 @@ export default {
     daisyui: {
         themes: ['light', 'dark', 'cupcake'],
     },
-    plugins: [forms, require('daisyui'),require('tailwind-scrollbar-hide')],
+    plugins: [forms, require('daisyui'), require('tailwind-scrollbar-hide')],
 };
