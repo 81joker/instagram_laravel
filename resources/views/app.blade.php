@@ -19,8 +19,8 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
-        <div class="w-full max-w-2xl rounded-xl border dark:border-gray-700 bg-white dark:bg-[#1b1b18] p-6 lg:p-8 text-center">
+    <body class="bg-[#FDFDFC] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+        <div class="w-full max-w-2xl rounded-xl border bg-white p-6 lg:p-8 text-center">
             <h1 class="text-4xl md:text-5xl font-bold mb-6">Welcome to Laravel</h1>
             <p class="text-lg md:text-xl mb-6">Your application has been successfully set up.</p>
             <a href="https://laravel.com/docs" class="text-blue-500 hover:underline">Get Started with Laravel Documentation</a>

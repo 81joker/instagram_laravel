@@ -1,12 +1,4 @@
-name: Laravel Instagram Ordering CI/CD
-
-env:
-  APP_ENV: testing
-  APP_DEBUG: true
-  DB_CONNECTION: sqlite
-  DB_DATABASE: database/database.sqlite
-  PROJECT_NAME: "Laravel Instagram Ordering"
-  ENVIRONMENT: "production"
+name: Laravel Food Ordering
 
 on:
   push:
@@ -35,15 +27,7 @@ jobs:
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
         run: composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      - name: Steps Node Js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-          cache: "npm"
-      - name: Install Node Dependencies
-        run: npm ci
-      - name: Build Assets
-        run: npm run build
+        # run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
         run: php artisan key:generate
       - name: Directory Permissions
@@ -75,36 +59,37 @@ jobs:
       - name: Run PHPStan
         run: vendor/bin/phpstan analyse --level=7 --memory-limit=2G
 
-      # 🔔 Build failed
-      - name: Notify Slack (Build Failed)
+      # - name: Upload Code Coverage
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     files: ./storage/logs/coverage.xml
+      #     fail_ci_if_error: true
+      #     verbose: true
+      #     flags: unittests
+      #     name: codecov-umbrella-laravel-foor-ordering
+
+      # 🔔 Slack notification on test failure
+      - name: Notify Slack (Tests Failed)
         if: failure()
         run: |
-          bash .github/scripts/slack-notify.sh \
-            build failed \
-            "${{env.PROJECT_NAME}}" \
-            "${{ github.ref_name }}" \
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \"❌ CI Tests Failed\nProject: Laravel Food Ordering\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+          }" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # 🔔 Build success
-      - name: Notify Slack (Build Success)
+      # 🔔 Slack notification on test success
+      - name: Notify Slack (Tests Passed)
         if: success()
         run: |
-          bash .github/scripts/slack-notify.sh \
-            build success \
-            "${{env.PROJECT_NAME}}" \
-            "${{ github.ref_name }}" \
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"✅ CI Tests Passed for Laravel Food Ordering (Branch: ${{ github.ref_name }})\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
   deploy:
     needs: laravel-tests
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
         with:
@@ -113,31 +98,25 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            cd ${{ secrets.APP_PATH }}
-            bash deploy.sh
+            set -e
 
-      # 🔔 Deploy failed
-      - name: Notify Slack (Deploy Failed)
+            cd ${{ secrets.APP_PATH }} || { echo "Path not found: ${{ secrets.APP_PATH }}"; exit 1; }
+            bash deploy.sh || { echo "Deployment script failed"; exit 1; }
+
+      # 🔔 Slack notification on deployment failure
+      - name: Notify Slack (Deployment Failed)
         if: failure()
         run: |
-          bash .github/scripts/slack-notify.sh \
-            deploy failed \
-            "${{env.PROJECT_NAME}}" \
-            "${{ github.ref_name }}" \
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "${{env.ENVIRONMENT}}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \"❌ Deployment Failed\nProject: Laravel Instgram Ordering\nBranch: ${{ github.ref_name }}\nRun: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+          }" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # 🔔 Deploy success
-      - name: Notify Slack (Deploy Success)
+      # 🔔 Slack notification on deployment success
+      - name: Notify Slack (Deployment Success)
         if: success()
         run: |
-          bash .github/scripts/slack-notify.sh \
-            deploy success \
-            "${{env.PROJECT_NAME}}" \
-            "${{ github.ref_name }}" \
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "${{env.ENVIRONMENT}}"
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{\"text\":\"✅ Deployment Successful for Laravel Instgram Ordering\nBranch: ${{ github.ref_name }}\nEnvironment: Production\"}" \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
