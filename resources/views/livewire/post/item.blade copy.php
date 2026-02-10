@@ -1,17 +1,17 @@
 <div class="max-w-lg mx-auto  ">
 
-    {{-- -------- --}}
-    {{-- Header-- --}}
-    {{-- -------- --}}
+    {{------------}}
+    {{--Header----}}
+    {{------------}}
 
 
     <header class="flex items-center gap-3">
 
-        <x-avatar src="https://source.unsplash.com/500x500?face-{{ rand(0, 10) }}" class="w-9 h-9" />
+        <x-avatar src="https://source.unsplash.com/500x500?face-{{rand(0,10)}}" class="w-9 h-9" />
 
         <div class="grid grid-cols-7 w-full gap-2">
             <div class="col-span-5">
-                <h5 class="font-semibold truncate text-sm">{{ fake()->name }} </h5>
+                <h5 class="font-semibold truncate text-sm">{{$post->user->name}} </h5>
             </div>
 
             <div class="col-span-2 flex text-right justify-end">
@@ -31,23 +31,95 @@
     </header>
 
 
-    {{-- -------- --}}
-    {{-- Main---- --}}
-    {{-- -------- --}}
+    {{------------}}
+    {{--Main------}}
+    {{------------}}
 
 
     <main>
-        <div class=" my-2">
-            <x-video />
+
+        <div class="my-2">
+            <div
+                x-init="
+            new Swiper($el, {
+                   modules: [Navigation, Pagination],
+                   loop: true,
+               
+                   pagination: {
+                       el: '.swiper-pagination',
+                   },
+               
+                   navigation: {
+                       nextEl: '.swiper-button-next',
+                       prevEl: '.swiper-button-prev',
+                   },
+               
+                   });  
+          "
+                class="swiper  h-[500px] border bg-white">
+
+                <!-- Slides -->
+                <ul x-cloak class="swiper-wrapper   ">
+
+                    @foreach ($post->media as $file)
+                    <li class="swiper-slide">
+                        @switch($file->mime)
+                        @case('video')
+
+                        <x-video source="{{$file->url}}" />
+                        @break
+                        @case('image')
+                        <img class="h-[500px] w-full block object-scale-down "
+                            src="{{$file->url}}" alt="image">
+                        @break
+                        @default
+
+                        @endswitch
+                    </li>
+                    @endforeach
+
+
+
+
+                </ul>
+
+                <!-- pagination -->
+                <div class="swiper-pagination z-50"></div>
+
+                @if (count($post->media)> 1)
+
+                <!--navigation buttons -->
+                <div class="swiper-button-prev absolute top-1/2 z-50 p-2">
+                    <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.8"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="swiper-button-next right-0  absolute top-1/2 z-50 p-2">
+                    <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.8"
+                            stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
+                    </div>
+                </div>
+                @endif
+
+            </div>
         </div>
+
     </main>
 
-    {{-- -------- --}}
-    {{-- Footer-- --}}
-    {{-- -------- --}}
+    {{------------}}
+    {{--Footer----}}
+    {{------------}}
 
 
     <footer>
+
+
         {{-- actions --}}
         <div class="flex gap-4 items-center my-2">
             <span>
@@ -88,13 +160,13 @@
 
         {{-- name & comment --}}
         <div class=" flex text-sm gap-2 font-medium ">
-            <p> <strong class="font-bold">John Surprise</strong> Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Voluptatem dolore adipisci quibusdam qui aut nostrum omnis blanditiis maiores nesciunt. Omnis
-                perferendis culpa in excepturi nemo ratione ea assumenda aspernatur voluptate!</p>
+            <p> <strong class="font-bold">{{$post->user->name}}</strong>
+                {{$post->description}}
+            </p>
         </div>
 
-        {{-- View Post Modal --}}
-        <button class="text-slate-500/90 text-sm font-medium">View all 345 comments</button>
+        {{-- View Post Modal--}}
+        <button onclick="Livewire.dispatch('openModal',{ component: 'post.view.modal', arguments:{'post':{{$post->id}}}})" class="text-slate-500/90 text-sm font-medium">View all {{$post-> comments()->count()}} comments</button>
 
         {{-- Leave comment --}}
 
@@ -121,6 +193,7 @@
         </form>
 
     </footer>
+
 
 
 
