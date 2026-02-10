@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Tim',
             'email' => 'tim26618@gmail.com',
-            'verified_at' => now(),
         ]);
     }
 }
