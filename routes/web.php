@@ -4,7 +4,6 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\Home;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', Home::class)->name('home');
 
 Route::get('/dashboard', function () {
@@ -17,4 +16,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
