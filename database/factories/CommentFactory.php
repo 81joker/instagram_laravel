@@ -19,11 +19,11 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
-            'parent_id'=>null,
-            'commentable_id'=>Post::factory(),
-            'commentable_type'=>Post::class,
-            'body'=>$this->faker->paragraph(),
-            'user_id'=>User::factory(),
+            'parent_id' => null,
+            'commentable_id' => Post::factory(),
+            'commentable_type' => Post::class,
+            'body' => $this->faker->paragraph(),
+            'user_id' => User::factory(),
         ];
     }
 

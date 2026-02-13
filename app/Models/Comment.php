@@ -14,12 +14,10 @@ class Comment extends Model
 
     protected $guarded = [];
 
-
     public function commentable()
     {
         return $this->morphTo();
     }
-
 
     /**
      * Ge the parent to this commnet
@@ -29,14 +27,12 @@ class Comment extends Model
     //     return $this->belongsTo(Self::class, 'parent_id');
     // }
 
-
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id')->with('replies');
     }
 
-
-    function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

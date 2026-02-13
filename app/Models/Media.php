@@ -9,9 +9,10 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Media extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    function mediable(): MorphTo
+    public function mediable(): MorphTo
     {
         return $this->morphTo();
     }
