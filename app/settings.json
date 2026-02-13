@@ -53,5 +53,9 @@
   "explorer.confirmDelete": false,
 
   // ===== Git =====
-  "git.autofetch": true
+  "git.autofetch": true,
+  
+  "recommendations": [
+    "shufo.vscode-blade-formatter"
+  ]
 }
