@@ -66,8 +66,7 @@ class MediaFactory extends Factory
                 break;
 
             default:
-                // code...
-                break;
+                return '';
         }
     }
 
@@ -83,6 +82,8 @@ class MediaFactory extends Factory
 
             return 'image';
         }
+
+        return 'unknown';
     }
 
     // chainable methods
