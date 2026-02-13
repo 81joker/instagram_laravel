@@ -37,78 +37,10 @@
 
 
     <main>
-
-        <div class="my-2">
-            <div x-init="new Swiper($el, {
-                modules: [Navigation, Pagination],
-                loop: true,
-            
-                pagination: {
-                    el: '.swiper-pagination',
-                },
-            
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            
-            });" class="swiper  h-[500px] border bg-white">
-
-                <!-- Slides -->
-                <ul x-cloak class="swiper-wrapper   ">
-
-                    {{-- @foreach ($post->media as $file) --}}
-                    <li class="swiper-slide">
-                        <x-video />
-                        {{-- @switch($file->mime)
-                        @case('video')
-                        <x-video source="{{ $file->url }}" />
-                        @break
-
-                        @case('image')
-                        <img class="h-[500px] w-full block object-scale-down " src="{{ $file->url }}" alt="image">
-                        @break
-
-                        @default
-                        @endswitch --}}
-
-                    </li>
-                    <li  class="swiper-slide">
-                        <img class="h-[500px] w-full block object-scale-down "
-                            src="https://images.unsplash.com/photo-1770260071751-0711b6f26ff4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMXx8fGVufDB8fHx8fA%3D%3D"
-                            alt="image">
-                    </li>
-                    {{-- @endforeach --}}
-                </ul>
-
-                <!-- pagination -->
-                <div class="swiper-pagination z-50"></div>
-
-                {{-- @if (count($post->media) > 1) --}}
-                <!--navigation buttons -->
-                <div class="swiper-button-prev absolute top-1/2 z-50 p-2 block">
-                    <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.8"
-                            stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                        </svg>
-                    </div>
-                </div>
-                <div class="swiper-button-next right-0  absolute top-1/2 z-50 p-2 block">
-                    <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.8"
-                            stroke="currentColor" class="w-4 h-4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                        </svg>
-                    </div>
-                </div>
-                {{-- @endif --}}
-
-            </div>
+        <div class=" my-2">
+            <x-video />
         </div>
-
     </main>
-
 
     {{-- -------- --}}
     {{-- Footer-- --}}
@@ -165,22 +97,31 @@
         <button class="text-slate-500/90 text-sm font-medium">View all 345 comments</button>
 
         {{-- Leave comment --}}
+
         <form class="grid grid-cols-12 items-center w-full  " x-data="{ inputText: '' }">
             @csrf
             <input placeholder="Leave a comment" type="text"
                 class="border-0 col-span-10 placeholder:text-sm text-sm outline-none w-full focus:outline-none px-0 rounded-lg hover:ring-0 focus:ring-0"
                 x-model="inputText">
+
             <div class="col-span-1 ml-auto flex justify-end text-right  ">
                 <button x-cloak class="text-sm font-semibold flex justify-end text-blue-500"
                     x-show="inputText.length > 0">Post</button>
+
             </div>
+
             <span class="col-span-1 ml-auto  ">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
                 </svg>
+
             </span>
         </form>
+
     </footer>
+
+
+
 </div>
