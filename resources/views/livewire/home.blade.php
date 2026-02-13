@@ -29,66 +29,61 @@
         </div>
     </header>
     {{-- main --}}
-
     <main class="grid lg:grid-cols-12 gap-8 md:mt-10 ">
-
         <aside class="lg:col-span-8   overflow-hidden  ">
-
             {{-- Stories --}}
             <section>
                 <ul class="flex overflow-x-auto scrollbar-hide items-center gap-2">
-
                     @for ($i = 0; $i < 10; $i++)
                         <li class="flex flex-col justify-center w-20 gap-1 p-2">
                             <x-avatar story src="https://source.unsplash.com/500x500?face-{{ $i }}"
                                 class="h-14 w-14" />
-                            <p class="text-xs font-medium truncate"> {{ fake()->name }} </p>
+                            <p class="text-xs font-medium truncate">{{ fake()->name }}</p>
                         </li>
                     @endfor
                 </ul>
-
             </section>
 
+            {{-- Posts --}}
+            <section class="mt-5 space-y-4 p-2">
+                <livewire:post.item />
+                {{-- @if ($posts)
+                    @foreach ($posts as $post)
+                        <livewire:post.item wire:key="post->{{ $post->id }}" :post="$post" />
+                    @endforeach
+                @else --}}
+                {{-- <p class="font-bold flex justify-center">No Posts</p> --}}
+                {{-- @endif --}}
+            </section>
         </aside>
-
 
         {{-- sugestions --}}
         <aside class="lg:col-span-4   hidden lg:block p-4">
-
+            <h1 class="text-red-900">This Title sugestions should to removes </h1>
             <div class="flex items-center gap-2">
-
                 <x-avatar src="https://source.unsplash.com/500x500?face" class="w-12 h-12" />
                 <h4 class="font-medium">{{ fake()->name }} </h4>
-
             </div>
-
             {{-- suggesstions --}}
             <section class="mt-4">
-
                 <h4 class="font-bold text-gray-700/95">Suggestions for you </h4>
-
                 <ul class="my-2 space-y-3">
-
                     @for ($i = 0; $i < 5; $i++)
                         <li class="flex items-center gap-3">
                             <x-avatar src="https://source.unsplash.com/500x500?face-{{ $i }}"
                                 class="w-12 h-12" />
-
                             <div class="grid grid-cols-7 w-full gap-2">
                                 <div class="col-span-5">
                                     <h5 class="font-semibold truncate text-sm">{{ fake()->name }}</h5>
                                     <p class="text-xs truncate"> Followed by {{ fake()->name }} </p>
                                 </div>
-
                                 <div class="col-span-2 flex text-right justify-end">
-
                                     <button class="font-bold text-blue-500 ml-auto text-sm">Follow</button>
                                 </div>
                             </div>
                         </li>
                     @endfor
                 </ul>
-
             </section>
             {{-- App links --}}
             <section class="mt-10">
@@ -110,11 +105,8 @@
                     <li class="text-xs text-gray-800/90 font-medium"><a href="#" class="hover:underline">About</a>
                     </li>
                 </ol>
-                <h3 class="text-gray-800/90 mt-6 text-sm"> @ 2023 INTAGRAM COURSE </h3>
+                <h3 class="text-gray-800/90 mt-6 text-sm"> @ 2026 INTAGRAM COURSE </h3>
             </section>
         </aside>
-
-
     </main>
-
 </div>
