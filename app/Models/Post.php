@@ -19,7 +19,7 @@ class Post extends Model
     ];
 
     // Media can be image or a video
-    function media(): MorphMany
+    public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');
     }
@@ -28,9 +28,10 @@ class Post extends Model
     {
         return $this->belongsTo(User::class);
     }
-    function comments(): MorphMany
+
+    public function comments(): MorphMany
     {
 
-        return  $this->morphMany(Comment::class, 'commentable')->with('replies');
+        return $this->morphMany(Comment::class, 'commentable')->with('replies');
     }
 }
