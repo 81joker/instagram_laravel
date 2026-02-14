@@ -4,4 +4,22 @@
 4- Install Auto-Refresh Livewire Components While Keeping States With Vite
 5- Install tailwind-scrollbar-hide.
 
-6- Imstall https://github.com/wire-elements/modal
+6- Install https://github.com/wire-elements/modal
+
+
+
+
+
+
+
+
+
+
+
+
+
+sail artisan config:clear
+sail artisan cache:clear
+sail artisan view:clear
+sail artisan route:clear
+composer dump-autoload

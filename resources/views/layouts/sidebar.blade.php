@@ -155,12 +155,12 @@
 
                 </span>
 
-                {{-- <h4 x-cloak x-show="!(shrink||drawer)" 
-                onclick="Livewire.dispatch('openModal', { component: 'post.create' })"
-                class=" text-lg font-medium">Create</h4> --}}
-                <h4 x-cloak x-show="!(shrink||drawer)"
-    wire:click="$emit('openModal', 'post.create')"
-    class="text-lg font-medium">Create</h4>
+               <button onclick="Livewire.dispatch('openModal', { component: 'post.create' })" class=" text-lg font-medium">
+              Create
+            </button> 
+             {{-- <button wire:click="$dispatch('openModal', 'post.create')" class=" text-lg font-medium">
+              Create
+            </button>     --}}
 
             </div></li>
 
