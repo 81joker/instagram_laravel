@@ -80,6 +80,8 @@ class Create extends ModalComponent
             return 'video';
         } elseif (str()->contains($media->getMimeType(), 'image')) {
             return 'image';
+        } else {
+            return 'unknown';
         }
     }
 
