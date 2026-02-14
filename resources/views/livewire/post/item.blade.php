@@ -54,10 +54,10 @@
                 <!-- Slides -->
                 <ul x-cloak class="swiper-wrapper   ">
 
-                    {{-- @foreach ($post->media as $file) --}}
+                    @foreach ($post->media as $file)
                     <li class="swiper-slide">
-                        <x-video />
-                        {{-- @switch($file->mime)
+                        {{-- <x-video /> --}}
+                        @switch($file->mime)
                         @case('video')
                         <x-video source="{{ $file->url }}" />
                         @break
@@ -67,18 +67,15 @@
                         @break
 
                         @default
-                        @endswitch --}}
+                        @endswitch 
                     </li>
-                    <li class="swiper-slide">
-                        <x-video />
-                    </li>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </ul>
 
                 <!-- pagination -->
                 <div class="swiper-pagination z-50"></div>
 
-                {{-- @if (count($post->media) > 1) --}}
+                @if (count($post->media) > 1)
                 <!--navigation buttons -->
                 <div class="swiper-button-prev absolute top-1/2 z-50 p-2 block">
                     <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
@@ -96,7 +93,7 @@
                         </svg>
                     </div>
                 </div>
-                {{-- @endif --}}
+                @endif
             </div>
         </div>
 

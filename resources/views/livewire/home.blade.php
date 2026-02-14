@@ -38,9 +38,7 @@
                         <li class="flex flex-col justify-center w-20 gap-1 p-2">
                             <x-avatar story src="https://source.unsplash.com/500x500?face-{{ $i }}"
                                 class="h-14 w-14" />
-                            <p class="text-xs font-medium truncate bg-slate-900/50 rounded-lg text-white p-1 text-center">
-                                Fake Name
-                            </p>
+                            <p class="text-xs font-medium truncate">Fake name</p>
                         </li>
                     @endfor
                 </ul>
@@ -63,7 +61,7 @@
             <h1 class="text-red-900">This Title sugestions should to removes </h1>
             <div class="flex items-center gap-2">
                 <x-avatar src="https://source.unsplash.com/500x500?face" class="w-12 h-12" />
-                <h4 class="font-medium">{{ fake()->name }} </h4>
+                <h4 class="font-medium">Fake name </h4>
             </div>
             {{-- suggesstions --}}
             <section class="mt-4">
@@ -75,8 +73,8 @@
                                 class="w-12 h-12" />
                             <div class="grid grid-cols-7 w-full gap-2">
                                 <div class="col-span-5">
-                                    <h5 class="font-semibold truncate text-sm">{{ fake()->name }}</h5>
-                                    <p class="text-xs truncate"> Followed by {{ fake()->name }} </p>
+                                    <h5 class="font-semibold truncate text-sm">Fake name</h5>
+                                    <p class="text-xs truncate"> Followed by Fake name </p>
                                 </div>
                                 <div class="col-span-2 flex text-right justify-end">
                                     <button class="font-bold text-blue-500 ml-auto text-sm">Follow</button>
