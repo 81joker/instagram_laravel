@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
@@ -27,11 +28,19 @@ class Comment extends Model
     //     return $this->belongsTo(Self::class, 'parent_id');
     // }
 
-    public function replies()
+
+    /**
+     * @return HasMany<Comment, self>
+     */
+    public function replies(): HasMany
     {
-        return $this->hasMany(Comment::class, 'parent_id', 'id')->with('replies');
+        return $this->hasMany(Comment::class, 'parent_id', 'id');
+        // return $this->hasMany(Comment::class, 'parent_id', 'id')->with('replies');
     }
 
+    /**
+     * @return BelongsTo<User, self>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
