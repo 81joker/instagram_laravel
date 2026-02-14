@@ -38,7 +38,9 @@
                         <li class="flex flex-col justify-center w-20 gap-1 p-2">
                             <x-avatar story src="https://source.unsplash.com/500x500?face-{{ $i }}"
                                 class="h-14 w-14" />
-                            <p class="text-xs font-medium truncate">{{ fake()->name }}</p>
+                            <p class="text-xs font-medium truncate bg-slate-900/50 rounded-lg text-white p-1 text-center">
+                                Fake Name
+                            </p>
                         </li>
                     @endfor
                 </ul>
