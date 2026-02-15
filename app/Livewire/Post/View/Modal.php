@@ -3,19 +3,15 @@
 namespace App\Livewire\Post\View;
 
 use App\Models\Post;
-use Livewire\Component;
-use LivewireUI\Modal\ModalComponent;
 use Livewire\Attributes\Js;
-use Livewire\Attributes\On;
+use LivewireUI\Modal\ModalComponent;
 
 class Modal extends ModalComponent
 {
-
     public $post;
 
     /**
      * Supported: 'sm', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl'
-     * 
      */
     public static function modalMaxWidth(): string
     {
@@ -27,22 +23,18 @@ class Modal extends ModalComponent
         return false;
     }
 
-
-
-    function mount()
+    public function mount()
     {
 
         $this->post = Post::findOrFail($this->post);
 
-        #get url to push in the history state  ---we will create this route later 
-        $url = url('post/' . $this->post->id);
+        // get url to push in the history state  ---we will create this route later
+        $url = url('post/'.$this->post->id);
         // $url = url()->current();
 
-        #push state using new livewire js() helper , you can check docks for that
+        // push state using new livewire js() helper , you can check docks for that
         $this->js("history.pushState({}, '', '{$url}')");
     }
-
-
 
     public function render()
     {
