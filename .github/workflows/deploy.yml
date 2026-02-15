@@ -1,0 +1,69 @@
+name: Laravel Deploy
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy via SSH
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USER }}
+                  key: ${{ secrets.SSH_PRIVATE_KEY }}
+                  port: ${{ secrets.SSH_PORT }}
+                  script: |
+                      set -euo pipefail
+                      cd ${{ secrets.APP_PATH }}
+
+                      echo "Running deploy script on remote host: $(hostname)"
+                      echo "Repository path: $(pwd)"
+                      echo "Expected commit on GitHub: ${{ github.sha }}"
+                      echo "Repository remotes:"
+                      git remote -v || true
+                      git remote show origin || true
+
+                      BRANCH="${{ github.ref_name }}"
+                      if [ -z "$BRANCH" ]; then
+                        BRANCH="main"
+                      fi
+                      echo "Deploying branch: $BRANCH"
+
+                      echo "[1/6] Show current local HEAD"
+                      git --no-pager log -1 --pretty=oneline || true
+                      git rev-parse --abbrev-ref HEAD || true
+
+                      echo "[2/6] Fetching origin (verbose)"
+                      # Try to fetch — this will fail if the server lacks permission
+                      git fetch --all --prune --tags || echo "git fetch failed (check remote credentials)"
+
+                      echo "[3/6] Show origin/$BRANCH HEAD"
+                      git show --pretty=oneline --no-patch origin/"$BRANCH" || echo "origin/$BRANCH not found"
+
+                      echo "[4/6] Resetting to origin/$BRANCH"
+                      if git rev-parse --verify origin/"$BRANCH" >/dev/null 2>&1; then
+                        git reset --hard origin/"$BRANCH"
+                      else
+                        echo "origin/$BRANCH not available; aborting reset"
+                      fi
+
+                      echo "[5/6] Ensure database file exists"
+                      touch database/database.sqlite
+
+                      echo "[6/6] Install and build, run artisan, set perms"
+                      composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader || true
+                      npm ci || true
+                      npm run build || true
+                      php artisan migrate --force || true
+                      php artisan config:cache || true
+                      php artisan route:cache || true
+                      php artisan view:cache || true
+                      chown -R www-data:www-data storage bootstrap/cache || true
+
+                      echo "Deployed commit (remote):"
+                      git --no-pager log -1 --pretty=oneline || true
+                      echo "Done."
