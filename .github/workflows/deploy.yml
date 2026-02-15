@@ -7,7 +7,7 @@ env:
   DB_DATABASE: database/database.sqlite
   PROJECT_NAME: "Laravel Instagram Ordering"
   ENVIRONMENT: "production"
-  PROJECT_URL: "https://curawel.nehaddev.com/"
+  PROJECT_URL: "https://instagram.nehaddev.com/"
 
 on:
   push:
