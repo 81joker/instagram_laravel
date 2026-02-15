@@ -27,8 +27,6 @@
     <aside class="lg:col-span-5 h-full   scrollbar-hide  relative flex gap-4 flex-col overflow-hidden overflow-y-scroll  ">
 
 
-    
-
     </aside>
 
 </div>

@@ -112,8 +112,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.APP_PATH }}
-            ./deploy.sh ${{ github.ref_name }}
-            # bash deploy.sh
+            bash deploy.sh
 
       # 🔔 Deploy failed
       - name: Notify Slack (Deploy Failed)
