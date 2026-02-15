@@ -9,7 +9,34 @@ jobs:
     deploy:
         runs-on: ubuntu-latest
         steps:
-            - name: Deploy via SSH
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Check SSH connectivity and key auth (diagnostic)
+              env:
+                  SSH_HOST: ${{ secrets.SSH_HOST }}
+                  SSH_PORT: ${{ secrets.SSH_PORT }}
+                  SSH_USER: ${{ secrets.SSH_USER }}
+                  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+              run: |
+                  set -euo pipefail
+                  echo "==== Install tools ===="
+                  sudo apt-get update -y
+                  sudo apt-get install -y netcat openssh-client || true
+
+                  echo "==== Test TCP port (nc) ===="
+                  echo "Checking ${SSH_HOST}:${SSH_PORT}"
+                  nc -vz "${SSH_HOST}" "${SSH_PORT}" || echo "TCP connection failed (nc) — could be network/firewall issue"
+
+                  echo "==== Test SSH auth with provided private key ===="
+                  mkdir -p /tmp/gh-deploy
+                  keyfile=/tmp/gh-deploy/deploy_key
+                  echo "$SSH_PRIVATE_KEY" > "${keyfile}"
+                  chmod 600 "${keyfile}"
+                  # disable host key checking for diagnostic (do not use in insecure long-term setups)
+                  ssh -i "${keyfile}" -o StrictHostKeyChecking=no -o ConnectTimeout=10 -p "${SSH_PORT}" "${SSH_USER}@${SSH_HOST}" 'echo "SSH OK: remote reachable and key auth succeeded"' || echo "SSH auth/connection failed (check key, user, host, firewall)"
+
+            - name: Deploy via SSH (existing)
               uses: appleboy/ssh-action@master
               with:
                   host: ${{ secrets.SSH_HOST }}
@@ -23,38 +50,17 @@ jobs:
                       echo "Running deploy script on remote host: $(hostname)"
                       echo "Repository path: $(pwd)"
                       echo "Expected commit on GitHub: ${{ github.sha }}"
-                      echo "Repository remotes:"
                       git remote -v || true
-                      git remote show origin || true
-
                       BRANCH="${{ github.ref_name }}"
-                      if [ -z "$BRANCH" ]; then
-                        BRANCH="main"
-                      fi
+                      if [ -z "$BRANCH" ]; then BRANCH="main"; fi
                       echo "Deploying branch: $BRANCH"
-
-                      echo "[1/6] Show current local HEAD"
-                      git --no-pager log -1 --pretty=oneline || true
-                      git rev-parse --abbrev-ref HEAD || true
-
-                      echo "[2/6] Fetching origin (verbose)"
-                      # Try to fetch — this will fail if the server lacks permission
                       git fetch --all --prune --tags || echo "git fetch failed (check remote credentials)"
-
-                      echo "[3/6] Show origin/$BRANCH HEAD"
-                      git show --pretty=oneline --no-patch origin/"$BRANCH" || echo "origin/$BRANCH not found"
-
-                      echo "[4/6] Resetting to origin/$BRANCH"
                       if git rev-parse --verify origin/"$BRANCH" >/dev/null 2>&1; then
                         git reset --hard origin/"$BRANCH"
                       else
                         echo "origin/$BRANCH not available; aborting reset"
                       fi
-
-                      echo "[5/6] Ensure database file exists"
                       touch database/database.sqlite
-
-                      echo "[6/6] Install and build, run artisan, set perms"
                       composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader || true
                       npm ci || true
                       npm run build || true
@@ -63,7 +69,4 @@ jobs:
                       php artisan route:cache || true
                       php artisan view:cache || true
                       chown -R www-data:www-data storage bootstrap/cache || true
-
-                      echo "Deployed commit (remote):"
-                      git --no-pager log -1 --pretty=oneline || true
                       echo "Done."
