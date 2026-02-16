@@ -3,7 +3,6 @@
 namespace App\Livewire\Post\View;
 
 use App\Models\Post;
-use Livewire\Attributes\Js;
 use LivewireUI\Modal\ModalComponent;
 
 class Modal extends ModalComponent
@@ -29,7 +28,7 @@ class Modal extends ModalComponent
         $this->post = Post::findOrFail($this->post);
 
         // get url to push in the history state  ---we will create this route later
-        $url = url('post/'.$this->post->id);
+        $url = url('post/' . $this->post->id);
         // $url = url()->current();
 
         // push state using new livewire js() helper , you can check docks for that
