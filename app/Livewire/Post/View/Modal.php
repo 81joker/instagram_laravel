@@ -28,7 +28,7 @@ class Modal extends ModalComponent
         $this->post = Post::findOrFail($this->post);
 
         // get url to push in the history state  ---we will create this route later
-        $url = url('post/' . $this->post->id);
+        $url = url('post/'.$this->post->id);
         // $url = url()->current();
 
         // push state using new livewire js() helper , you can check docks for that
