@@ -1,4 +1,4 @@
-name: Laravel Instagram Ordering CI/CD
+name: Laravel CI/CD Pipeline
 
 env:
   APP_ENV: testing
@@ -7,12 +7,13 @@ env:
   DB_DATABASE: database/database.sqlite
   PROJECT_NAME: "Laravel Instagram Ordering"
   ENVIRONMENT: "production"
+  PROJECT_URL: "https://instagram.nehaddev.com/"
 
 on:
   push:
-    branches: ["*"]
+    branches: ["main"]
   pull_request:
-    branches: ["*"]
+    branches: ["main"]
 
 jobs:
   laravel-tests:
@@ -107,59 +108,11 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ secrets.APP_PATH }}
-            # bash deploy.sh
-            # Start deploy sh
-            echo "Running deploy script on remote host: $(hostname)"
-
-            echo "Repository remotes:"
-            git remote -v || true
-
-            BRANCH="${{ github.ref_name }}"
-            if [ -z "$BRANCH" ]; then
-            BRANCH="main"
-            fi
-            echo "Deploying branch: $BRANCH"
-
-            echo "[1/6] Fetching remotes"
-            git fetch --all --prune || echo "git fetch failed (continuing to try pull)"
-
-            echo "[2/6] Resetting to origin/$BRANCH (will discard local changes)"
-            if ! git reset --hard origin/"$BRANCH"; then
-            echo "Reset failed — attempting git pull origin $BRANCH"
-            git pull origin "$BRANCH" || { echo "git pull also failed"; exit 1; }
-            fi
-
-            echo "[3/6] Ensure database file exists"
-            touch database/database.sqlite
-
-            echo "[4/6] Installing composer dependencies (remote)"
-            composer install --no-interaction --prefer-dist --no-dev --optimize-autoloader
-
-
-            echo "[4.5/6] Installing Node dependencies"
-            npm ci
-
-            echo "[4.6/6] Building frontend assets"
-            npm run build
-
-            echo "[5/6] Running artisan tasks"
-            php artisan migrate --force
-            php artisan config:cache || true
-            php artisan route:cache || true
-            php artisan view:cache || true
-
-            echo "[6/6] Fix permissions and finish"
-            chown -R www-data:www-data storage bootstrap/cache || true
-
-            echo "Deployed commit:"
-            git --no-pager log -1 --pretty=oneline
-
-            echo "The app has been built and deployed!"
-            #End deploy sh
+            bash deploy.sh
 
       # 🔔 Deploy failed
       - name: Notify Slack (Deploy Failed)
@@ -169,8 +122,7 @@ jobs:
             deploy failed \
             "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
-            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "${{env.ENVIRONMENT}}"
+            "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \"" \"${{env.PROJECT_URL}}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -183,6 +135,7 @@ jobs:
             "${{env.PROJECT_NAME}}" \
             "${{ github.ref_name }}" \
             "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-            "${{env.ENVIRONMENT}}"
+            "${{env.ENVIRONMENT}}" \
+            "${{env.PROJECT_URL}}"
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

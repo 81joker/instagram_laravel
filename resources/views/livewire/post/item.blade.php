@@ -1,5 +1,6 @@
 <div class="max-w-lg mx-auto  ">
 
+
     {{-- -------- --}}
     {{-- Header-- --}}
     {{-- -------- --}}
@@ -11,20 +12,17 @@
 
         <div class="grid grid-cols-7 w-full gap-2">
             <div class="col-span-5">
-                <h5 class="font-semibold truncate text-sm">{{ fake()->name }} </h5>
+                <h5 class="font-semibold truncate text-sm">{{ $post->user->name }} </h5>
             </div>
 
             <div class="col-span-2 flex text-right justify-end">
-
                 <button class="font-bold text-sm text-gray-500 ml-auto">
-
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                         <path
                             d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                     </svg>
                 </button>
-
             </div>
         </div>
 
@@ -37,7 +35,6 @@
 
 
     <main>
-
         <div class="my-2">
             <div x-init="new Swiper($el, {
                 modules: [Navigation, Pagination],
@@ -57,10 +54,10 @@
                 <!-- Slides -->
                 <ul x-cloak class="swiper-wrapper   ">
 
-                    {{-- @foreach ($post->media as $file) --}}
+                    @foreach ($post->media as $file)
                     <li class="swiper-slide">
-                        <x-video />
-                        {{-- @switch($file->mime)
+                        {{-- <x-video /> --}}
+                        @switch($file->mime)
                         @case('video')
                         <x-video source="{{ $file->url }}" />
                         @break
@@ -70,21 +67,15 @@
                         @break
 
                         @default
-                        @endswitch --}}
-
+                        @endswitch 
                     </li>
-                    <li  class="swiper-slide">
-                        <img class="h-[500px] w-full block object-scale-down "
-                            src="https://images.unsplash.com/photo-1770260071751-0711b6f26ff4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzMXx8fGVufDB8fHx8fA%3D%3D"
-                            alt="image">
-                    </li>
-                    {{-- @endforeach --}}
+                    @endforeach
                 </ul>
 
                 <!-- pagination -->
                 <div class="swiper-pagination z-50"></div>
 
-                {{-- @if (count($post->media) > 1) --}}
+                @if (count($post->media) > 1)
                 <!--navigation buttons -->
                 <div class="swiper-button-prev absolute top-1/2 z-50 p-2 block">
                     <div class=" bg-white/95 border p-1 block rounded-full text-gray-900">
@@ -102,8 +93,7 @@
                         </svg>
                     </div>
                 </div>
-                {{-- @endif --}}
-
+                @endif
             </div>
         </div>
 
@@ -156,13 +146,15 @@
 
         {{-- name & comment --}}
         <div class=" flex text-sm gap-2 font-medium ">
-            <p> <strong class="font-bold">John Surprise</strong> Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Voluptatem dolore adipisci quibusdam qui aut nostrum omnis blanditiis maiores nesciunt. Omnis
-                perferendis culpa in excepturi nemo ratione ea assumenda aspernatur voluptate!</p>
+            <p> <strong class="font-bold">{{ $post->user->name }}</strong> {{ $post->description }}</p>
         </div>
 
         {{-- View Post Modal --}}
-        <button class="text-slate-500/90 text-sm font-medium">View all 345 comments</button>
+          <button onclick="Livewire.dispatch('openModal', {component: 'post.view.modal', arguments: {'post':{{$post->id}}}})" class="text-slate-500/90 text-sm font-medium">
+            View all 232 comments
+        </button>
+
+
 
         {{-- Leave comment --}}
         <form class="grid grid-cols-12 items-center w-full  " x-data="{ inputText: '' }">
