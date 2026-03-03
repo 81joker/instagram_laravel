@@ -23,8 +23,8 @@ class DatabaseSeeder extends Seeder
         // Post::factory(20)->create(['type' => 'reel']);
         // Post::factory(rand(10, 40))->create(['type' => 'post']);
 
-        // Post::factory(20)->hasComments(rand(20, 20))->create(['type' => 'post']);
-        // Post::factory(12)->hasComments(rand(15, 20))->create(['type' => 'reel']);
+        Post::factory(20)->hasComments(rand(20, 20))->create(['type' => 'post']);
+        Post::factory(12)->hasComments(rand(15, 20))->create(['type' => 'reel']);
 
         // Create comment replies
         Comment::limit(50)->each(function ($comment) {
