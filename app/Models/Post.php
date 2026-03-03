@@ -18,17 +18,18 @@ class Post extends Model
     ];
 
     // Media can be image or a video
-    // function media(): MorphMany
-    // {
-    //     return $this->morphMany(Media::class, 'mediable');
-    // }
+    public function media(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'mediable');
+    }
 
     // public function user(): BelongsTo
     // {
     //     return $this->belongsTo(User::class);
     // }
-    public function comments(): MorphMany
-    {
-        return $this->morphMany(Comment::class, 'commentable')->with('replies');
-    }
+    // function comments(): MorphMany
+    // {
+
+    //     return  $this->morphMany(Comment::class, 'commentable')->with('replies');
+    // }
 }
