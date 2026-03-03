@@ -10,10 +10,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
+    /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id',
+        'parent_id',
+        'commentable_id',
+        'commentable_type',
+        'body',
+    ];
+
+    use HasFactory;
+    use SoftDeletes;
 
     public function commentable()
     {
@@ -21,12 +32,12 @@ class Comment extends Model
     }
 
     /**
-     * Ge the parent to this commnet
+     * Get the parent of this comment
      */
-    // public function parent()
-    // {
-    //     return $this->belongsTo(Self::class, 'parent_id');
-    // }
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
 
     /**
      * @return HasMany<Comment, self>
