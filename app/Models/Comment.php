@@ -11,6 +11,7 @@ class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
+
     use SoftDeletes;
 
     protected $fillable = [
@@ -26,7 +27,6 @@ class Comment extends Model
         return $this->morphTo();
     }
 
-
     /**
      * Get the parent of this comment
      */
@@ -35,14 +35,12 @@ class Comment extends Model
         return $this->belongsTo(self::class, 'parent_id');
     }
 
-
     public function replies()
     {
         return $this->hasMany(Comment::class, 'parent_id', 'id')->with('replies');
     }
 
-
-    function user(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
