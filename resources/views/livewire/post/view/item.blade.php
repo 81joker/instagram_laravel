@@ -1,37 +1,21 @@
 <div  class="grid grid-cols-12 gap-3 h-full w-full overflow-hidden">
 
-    <aside class="lg:col-span-7 m-auto items-center w-full overflow-scroll">
-
-
+    <aside class="lg:col-span-7 m-auto items-center w-full  scrollbar-hide">
         {{-- Css snap scroll --}}
-        <div class="relative flex overflow-x-scroll overscroll-contain w-[500px] selection:snap-x snap-mandatory gap-2 px-2">
-
-           
+        <div class="relative flex overflow-x-auto overflow-hidden  w-[500px] selection:snap-x snap-mandatory gap-2 px-2">
         @foreach ($post->media as $key  =>$file)
-
         <div class="w-full h-full shrink-0 snap-always snap-center">
-
             @switch($file->mime)
                 @case('video')
-
                 <x-video source="{{$file->url}}" />
-                    
                     @break
                 @case('image')
-
                  <img src="{{$file->url}}" alt="image" class="h-full w-full block object-scale-down">
-                    
                     @break
                 @default
-                    
             @endswitch
-
-        </div>
-            
+        </div>  
         @endforeach
-
-
-
         </div>
 
     </aside>
@@ -39,34 +23,20 @@
     <aside class="lg:col-span-5 h-full scrollbar-hide relative flex gap-4 flex-col overflow-hidden overflow-y-scroll">
         
         <header class="flex  items-center gap-3 border-b py-2  sticky  top-0 bg-white z-10 ">
-
             <x-avatar story src="https://i.pravatar.cc/50{{rand(1,10)}}" class="h-9 w-9" />
-
             <div class="grid grid-cols-7 w-full gap-2">
-
                     <div class="col-span-5">
                         <h5 class="font-semibold truncate text-sm">{{$post->user->name}} </h5>
                     </div>
-
                     <div class="flex col-span-2 text-right justify-end">
-
                         <button  wire:click="$dispatch('closeModal')"  class="text-gray-500 ml-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.9" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                               </svg>
-                              
-
                         </button>
-
                     </div>
-
-
-
-
             </div>
-
         </header>
-
         <main>
 
             <div class="h-96 bg-blue-500"></div>
