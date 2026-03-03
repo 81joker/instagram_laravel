@@ -36,7 +36,7 @@
                 <ul class="flex overflow-x-auto scrollbar-hide items-center gap-2">
                     @for ($i = 0; $i < 10; $i++)
                         <li class="flex flex-col justify-center w-20 gap-1 p-2">
-                            <x-avatar story src="https://source.unsplash.com/500x500?face-{{ $i }}"
+                            <x-avatar story src="https://i.pravatar.cc/50{{ $i }}"
                                 class="h-14 w-14" />
                             <p class="text-xs font-medium truncate">Fake shoud be hier</p>
                         </li>
@@ -60,7 +60,7 @@
         <aside class="lg:col-span-4   hidden lg:block p-4">
             <h1 class="text-red-900">This Title sugestions should to removes </h1>
             <div class="flex items-center gap-2">
-                <x-avatar src="https://source.unsplash.com/500x500?face" class="w-12 h-12" />
+                <x-avatar src="https://i.pravatar.cc/50{{rand(0 ,10) }}" class="w-12 h-12" />
                 <h4 class="font-medium">Fake shoud be hier </h4>
             </div>
             {{-- suggesstions --}}
@@ -69,7 +69,7 @@
                 <ul class="my-2 space-y-3">
                     @for ($i = 0; $i < 5; $i++)
                         <li class="flex items-center gap-3">
-                            <x-avatar src="https://source.unsplash.com/500x500?face-{{ $i }}"
+                            <x-avatar src="https://i.pravatar.cc/50{{ $i }}"
                                 class="w-12 h-12" />
                             <div class="grid grid-cols-7 w-full gap-2">
                                 <div class="col-span-5">

@@ -40,7 +40,7 @@
         
         <header class="flex  items-center gap-3 border-b py-2  sticky  top-0 bg-white z-10 ">
 
-            <x-avatar story src="https://source.unsplash.com/500x500?face-{{rand(1,10)}}" class="h-9 w-9" />
+            <x-avatar story src="https://i.pravatar.cc/50{{rand(1,10)}}" class="h-9 w-9" />
 
             <div class="grid grid-cols-7 w-full gap-2">
 
