@@ -40,7 +40,6 @@ class Home extends Component
         }
         // increment page
         $this->perPage += $this->perPageIncrement;
-
         // load posts
         $this->loadPosts();
     }
@@ -56,8 +55,8 @@ class Home extends Component
     public function mount()
     {
         // $this->posts = Post::latest()->get();
-        $this->posts = Post::with('comments')->latest()->get();
-        // $this->loadPosts();
+        // $this->posts = Post::with('comments')->latest()->get();
+        $this->loadPosts();
     }
 
     public function render()

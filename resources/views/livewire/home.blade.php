@@ -1,4 +1,29 @@
-<div class="w-full h-full">
+<div
+
+x-data="{
+    posts: @entangle('posts'),
+    canLoadMore: @entangle('canLoadMore'),
+    loadMore() {
+        this.$wire.loadMore().then(() => {
+            // After loading more posts, check if we can load more
+            this.canLoadMore = this.$wire.canLoadMore;
+        });
+    }
+}"
+
+{{-- @scroll.window="if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) { if (canLoadMore) { loadMore(); } }" --}}
+@scroll.window.trottle="
+
+scrollTop= window.scrollY || window.scrollTop;
+divHeight = window.innerHeight || document.documentElement.clientHeight ;
+scrollHeight = document.documentElement.scrollHeight;
+
+isScroll = scrollTop + divHeight >= scrollHeight-1;
+if (isScroll && canLoadMore) {
+    @this.loadMore();
+}
+"
+class="w-full h-full">
     {{-- Header --}}
     <header class="md:hidden sticky top-0 bg-white">
 
