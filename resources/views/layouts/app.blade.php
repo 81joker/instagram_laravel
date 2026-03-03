@@ -15,6 +15,11 @@
         [x-cloak] {
             display: none !important;
         }
+     /* scrollbar-color {
+            transparent transparent !important;
+            background: transparent !important;
+            color: transparent !important;
+     } */
     </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
