@@ -15,11 +15,32 @@
         [x-cloak] {
             display: none !important;
         }
-     /* scrollbar-color {
-            transparent transparent !important;
-            background: transparent !important;
-            color: transparent !important;
-     } */
+        /* إخفاء شريط التمرير والأسهم في كل الصفحة والمودال */
+        .scrollbar-hide,
+        #modal-container,
+        #modal-container .overflow-x-scroll,
+        #modal-container .overflow-y-scroll,
+        #modal-container [class*="overflow-x-scroll"],
+        #modal-container [class*="overflow-y-scroll"],
+        #modal-container [class*="overflow-scroll"] {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+        }
+        /* .scrollbar-hide::-webkit-scrollbar,
+        #modal-container::-webkit-scrollbar,
+        #modal-container ::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+        } */
+        /* إخفاء أسهم تنقّل السلايدر (Swiper) */
+        .swiper-button-prev,
+        .swiper-button-next,
+        .swiper .swiper-button-prev,
+        .swiper .swiper-button-next {
+            display: none !important;
+            visibility: hidden !important;
+        }
     </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

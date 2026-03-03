@@ -28,7 +28,7 @@ class Modal extends ModalComponent
         $this->post = Post::findOrFail($this->post);
 
         // get url to push in the history state  ---we will create this route later
-        $url = url('post/'.$this->post->id);
+        $url = url('post/' . $this->post->id);
         // $url = url()->current();
 
         // push state using new livewire js() helper , you can check docks for that
@@ -38,7 +38,7 @@ class Modal extends ModalComponent
     public function render()
     {
         return <<<'BLADE'
-        <main class="bg-white h-[calc(100vh_-_3.5rem)] md:h-[calc(100vh_-_5rem)]  flex flex-col border gap-y-4  px-5">
+        <main class="bg-white h-[calc(100vh_-_3.5rem)] md:h-[calc(100vh_-_5rem)] p-2  flex flex-col border gap-y-4  px-5">
         {{-- header --}}
         <header class="w-full py-2">
 
