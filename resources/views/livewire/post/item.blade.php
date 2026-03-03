@@ -151,7 +151,7 @@
 
         {{-- View Post Modal --}}
           <button onclick="Livewire.dispatch('openModal', {component: 'post.view.modal', arguments: {'post':{{$post->id}}}})" class="text-slate-500/90 text-sm font-medium">
-            View all 232 comments
+            View all {{ $post->comments->count() }} comments
         </button>
 
 
