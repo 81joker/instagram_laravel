@@ -28,9 +28,7 @@ class DatabaseSeeder extends Seeder
         // Create comment replies
         // Comment::limit(50)->each(function ($comment) {
         //     $comment::factory(rand(1, 5))->isReply($comment->commentable)->create(['parent_id' => $comment->id]);
-
         // });
-
         $this->call([
             MediaSeeder::class,
         ]);
