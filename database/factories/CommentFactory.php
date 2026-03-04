@@ -28,14 +28,12 @@ class CommentFactory extends Factory
         ];
     }
 
-
     //
 
-    function isReply(Post $post)
+    public function isReply(Post $post)
     {
 
         return $this->state(function (array $attributes) use ($post) {
-
 
             return [
                 'commentable_id' => $post->id,

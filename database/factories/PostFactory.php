@@ -29,7 +29,7 @@ class PostFactory extends Factory
         ];
     }
 
-    function configure(): static
+    public function configure(): static
     {
 
         return $this->afterCreating(

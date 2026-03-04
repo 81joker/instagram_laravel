@@ -15,6 +15,7 @@ class Item extends Component
         // $comments = $this->post->comments()->latest()->get();
         $comments = $this->post->comments;
         dump($comments);
+
         return view('livewire.post.view.item', [
             'comments' => $comments,
         ]);
