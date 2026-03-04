@@ -30,7 +30,7 @@
     <main class="grid grid-cols-12 gap-3 h-full w-full overflow-hidden">
 
         {{-- Left Side Meida --}}
-        <aside class="lg:col-span-7  m-auto items-center w-full overflow-scroll">
+        <aside class="lg:col-span-7  m-auto items-center w-full overflow-hidden  ">
 
             @if (count($media)== 0)
                 <label for="customFileInput" class=" m-auto max-w-fit flex-col flex gap-3 cursor-pointer">
@@ -49,7 +49,7 @@
                     </label>
             @else
                 {{-- Show when file count is > 0 --}}
-                    <div class="flex overflow-x-scroll w-[500px] h-96 snap-x snap-mandatory gap-2 px-2 bg-stone-900">
+                    <div class="flex overflow-x-auto scrollbar-hide w-[500px] h-96 snap-x snap-mandatory gap-2 px-2 bg-stone-900">
                     
                             @foreach ($media as $key => $file)
                             <div class="w-full h-full shrink-0 snap-always snap-center">                        

@@ -16,7 +16,7 @@
             display: none !important;
         }
         /* إخفاء شريط التمرير والأسهم في كل الصفحة والمودال */
-        .scrollbar-hide,
+        /* .scrollbar-hide,
         #modal-container,
         #modal-container .overflow-x-scroll,
         #modal-container .overflow-y-scroll,
@@ -32,7 +32,7 @@
             display: none !important;
             width: 0 !important;
             height: 0 !important;
-        }
+        } */
         /* إخفاء أسهم تنقّل السلايدر (Swiper) */
         .swiper-button-prev,
         .swiper-button-next,

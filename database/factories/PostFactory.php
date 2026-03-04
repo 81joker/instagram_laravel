@@ -23,18 +23,24 @@ class PostFactory extends Factory
             'user_id' => User::factory(),
             'description' => fake()->sentence(),
             'location' => fake()->city(),
+            'allow_commenting' => fake()->boolean(),
             'hide_like_view' => fake()->boolean(),
             'type' => 'post',
         ];
     }
 
-    public function configure()
+    function configure(): static
     {
+
         return $this->afterCreating(
             function (Post $post) {
+
                 if ($post->type == 'reel') {
+
+                    //
                     Media::factory()->reel()->create(['mediable_type' => get_class($post), 'mediable_id' => $post->id]);
                 } else {
+
                     Media::factory()->post()->create(['mediable_type' => get_class($post), 'mediable_id' => $post->id]);
                 }
             }

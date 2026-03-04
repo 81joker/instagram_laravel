@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         Post::factory(12)->hasComments(rand(15, 20))->create(['type' => 'reel']);
 
         // Create comment replies
-        Comment::limit(50)->each(function ($comment) {
+        Comment::limit(50)->get()->each(function ($comment) {
             $comment::factory(rand(1, 5))->isReply($comment->commentable)->create(['parent_id' => $comment->id]);
         });
         $this->call([

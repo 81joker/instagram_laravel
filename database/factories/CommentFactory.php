@@ -19,6 +19,7 @@ class CommentFactory extends Factory
     public function definition(): array
     {
         return [
+
             'parent_id' => null,
             'commentable_id' => Post::factory(),
             'commentable_type' => Post::class,
@@ -27,13 +28,19 @@ class CommentFactory extends Factory
         ];
     }
 
-    // Modify the isReply state to accept a Post instance
-    public function isReply(Post $post)
+
+    //
+
+    function isReply(Post $post)
     {
+
         return $this->state(function (array $attributes) use ($post) {
+
+
             return [
                 'commentable_id' => $post->id,
                 'commentable_type' => Post::class,
+
             ];
         });
     }
